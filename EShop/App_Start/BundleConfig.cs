@@ -25,6 +25,12 @@ namespace EShop
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/responsive.css",
+                      "~/Content/animate.css",
+                      "~/Content/prettyPhoto.css",
+                      "~/Content/price-range.css",
+                      "~/Content/main.css",
                       "~/Content/site.css"));
         }
     }
