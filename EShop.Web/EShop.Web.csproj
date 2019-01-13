@@ -16,11 +16,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\EShop.DataModel\EShop.DataModel.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <None Update="eshop.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
