@@ -17,20 +17,20 @@ namespace EShop.Web.Code
             _context = context;
         }
 
-        public static void SeedData(UserManager<ApplicationUsers> userManager,
-            RoleManager<ApplicationRoles> roleManager)
+        public static void SeedData(UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             SeedRoles(roleManager);
             SeedUsers(userManager);
         }
 
-        public static void SeedUsers(UserManager<ApplicationUsers> userManager)
+        public static void SeedUsers(UserManager<ApplicationUser> userManager)
         {
             //int cityId = _context.Cities.First(x => x.Name == "Dhaka").Id;
             if (userManager.FindByNameAsync
                     ("user1").Result == null)
             {
-                ApplicationUsers user = new ApplicationUsers
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "user1",
                     Email = "user1@localhost.com",
@@ -53,7 +53,7 @@ namespace EShop.Web.Code
             if (userManager.FindByNameAsync
                     ("admin").Result == null)
             {
-                ApplicationUsers user = new ApplicationUsers
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = "admin",
                     Email = "admin@localhost.com",
@@ -73,12 +73,12 @@ namespace EShop.Web.Code
             }
         }
 
-        public static void SeedRoles(RoleManager<ApplicationRoles> roleManager)
+        public static void SeedRoles(RoleManager<ApplicationRole> roleManager)
         {
             if (!roleManager.RoleExistsAsync
                 ("User").Result)
             {
-                ApplicationRoles role = new ApplicationRoles
+                ApplicationRole role = new ApplicationRole
                 {
                     Name = "User",
                     Description = "Perform normal operations."
@@ -91,7 +91,7 @@ namespace EShop.Web.Code
             if (!roleManager.RoleExistsAsync
                 ("Admin").Result)
             {
-                ApplicationRoles role = new ApplicationRoles
+                ApplicationRole role = new ApplicationRole
                 {
                     Name = "Admin",
                     Description = "Perform all the operations."
@@ -103,7 +103,7 @@ namespace EShop.Web.Code
             if (!roleManager.RoleExistsAsync
                 ("Editor").Result)
             {
-                ApplicationRoles role = new ApplicationRoles
+                ApplicationRole role = new ApplicationRole
                 {
                     Name = "Editor",
                     Description = "Can Edit  all the operations."

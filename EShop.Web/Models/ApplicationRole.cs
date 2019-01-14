@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EShop.Web.Models
 {
-    public class ApplicationRoles : IdentityRole
+    public class ApplicationRole : IdentityRole
     {
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }

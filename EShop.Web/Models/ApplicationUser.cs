@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace EShop.Web.Models
 {
-    public class ApplicationUsers : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
         public string Contact { get; set; }
-        public string Gender { get; set; }
+        public int Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string JoinIp { get; set; }
         public string Address { get; set; }
-        public int? CityId { get; set; }
-        public string Refference { get; set; }
+        //public int? CityId { get; set; }
+        //public string Refference { get; set; }
 
         //[ForeignKey("CityId")]
         //public virtual City City { get; set; }
