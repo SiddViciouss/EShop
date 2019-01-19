@@ -43,7 +43,7 @@
                 </span>
                 <div class="topbar-child2">
                     <span class="topbar-email">
-                        admin@42studio.org
+                        <a href="mailto:admin@42studio.ru">admin@42studio.ru</a>
                     </span>
                 </div>
             </div>
@@ -58,16 +58,16 @@
                 <div class="wrap_menu">
                     <nav class="menu">
                         <ul class="main_menu">
-                            <li>
+                            <li class="sale-noti">
                                 <a href="product.html">Каталог</a>
                             </li>
 
-                            <li class="sale-noti">
+                            <li>
                                 <a href="cart.html">Оплата</a>
                             </li>
 
                             <li>
-                                <a href="about.html">Компания</a>
+                                <a href="about.html">О компании</a>
                             </li>
 
                         </ul>
@@ -128,7 +128,7 @@
                     <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
                         <div class="topbar-child2-mobile">
                             <span class="topbar-email">
-                                admin@42studio.ru
+                                <a href="mailto:admin@42studio.ru">admin@42studio.ru</a>
                             </span>
                         </div>
                     </li>
@@ -155,12 +155,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - 42 Studio
-            @*EShop.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+    <footer class="bg6 p-t-20 p-b-20 p-l-20 p-r-20">
+        <div class="t-center s-text8">
+            <p>&copy; 2019 - 42 Studio. Разработано на основе шаблона <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
         </div>
     </footer>
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -180,8 +180,15 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
+    <script src="~/css/vendor/select2/select2.js" asp-append-version="true"></script>
+    <script src="~/css/vendor/bootstrap/js/popper.js" asp-append-version="true"></script>
+    <script src="~/css/vendor/countdowntime/countdowntime.js" asp-append-version="true"></script>
+    <script src="~/css/vendor/lightbox2/js/lightbox.min.js" asp-append-version="true"></script>
+    <script src="~/css/vendor/sweetalert/sweetalert.min.js" asp-append-version="true"></script>
+    <script src="~/js/slick-custom.js" asp-append-version="true"></script>
+    <script src="~/js/map-custom.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

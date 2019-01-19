@@ -573,12 +573,13 @@ iframe {
 
 /* ------------------------------------ */
 .topbar-email,
-.topbar-child1 {
-  font-family: Montserrat-Regular;
-  font-size: 13px;
-  color: #888888;
-  line-height: 1.7;
-  margin-left: 38px;
+.topbar-child1,
+.topbar-email a{
+    font-family: Montserrat-Regular;
+    font-size: 13px;
+    color: #888888;
+    line-height: 1.7;
+    margin-left: 38px;
 }
 
 /* ------------------------------------ */
