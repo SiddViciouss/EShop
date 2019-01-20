@@ -1,4 +1,5 @@
 ﻿using EShop.Web.Data;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EShop.Web.Models.DbModels
@@ -16,6 +17,8 @@ namespace EShop.Web.Models.DbModels
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public string PreviewImagePath { get; set; }
+        public string ImagePaths { get; set; }
 
         //public virtual Brand Brand { get; set; }
         //public virtual Unit Unit { get; set; }
