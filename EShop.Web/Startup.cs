@@ -14,6 +14,7 @@ using EShop.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EShop.Web.Models;
+using EShop.Web.Code;
 
 namespace EShop.Web
 {
@@ -55,6 +56,7 @@ namespace EShop.Web
                 options.IdleTimeout = TimeSpan.FromDays(20);
                 options.Cookie.HttpOnly = true;
             });
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
