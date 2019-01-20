@@ -12,6 +12,8 @@ namespace EShop.Web.ViewModels
         public int PageSize { get; set; }
         public int CurrentPage { get; set; }
         public List<Category> AvailableCategories { get; set; }
+        public int? ActiveCategoryId { get; set; }
+
         public ProductViewModel(IUnitOfWork unitOfWork, int? categoryId, int pageSize = 15, int currentPage = 1)
         {
             this.unitOfWork = unitOfWork;
@@ -34,6 +36,7 @@ namespace EShop.Web.ViewModels
                             .Take(PageSize)
                             .ToList();
             }
+            ActiveCategoryId = categoryId;
             AvailableCategories = this.unitOfWork.Repository<Category>().GetAll().ToList();
         }
 

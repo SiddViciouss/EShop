@@ -13,9 +13,9 @@ namespace EShop.Web.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId = null)
         {
-            var viewModel = new ProductViewModel(unitOfWork, null);
+            var viewModel = new ProductViewModel(unitOfWork, categoryId);
             return View(viewModel);
         }
     }

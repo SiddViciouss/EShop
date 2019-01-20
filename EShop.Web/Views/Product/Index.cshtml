@@ -1,6 +1,7 @@
 ﻿@model EShop.Web.ViewModels.ProductViewModel
 @{
     ViewData["Title"] = "Index";
+    var activeCategoryId = Model.ActiveCategoryId.HasValue ? Model.ActiveCategoryId.Value : -1;
 }
 
 @*<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/heading-pages-02.jpg);">
@@ -25,15 +26,15 @@
                     </h4>
 
                     <ul class="p-b-54">
-                        <li class="p-t-4">
-                            <a href="#" class="s-text13 active1">
+                        <li class="p-t-4 @(activeCategoryId < 0 ? "sale-noti" : string.Empty)">
+                            <a asp-action="Index" class="s-text13 ">
                                 Все
                             </a>
                         </li>
                         @foreach (var category in Model.AvailableCategories)
                         {
-                            <li class="p-t-4">
-                                <a href="#" class="s-text13">
+                            <li class="p-t-4 @(activeCategoryId == category.Id ? "sale-noti" : string.Empty)">
+                                <a asp-action="Index" asp-route-categoryId="@category.Id.ToString()" class="s-text13">
                                     @category.Name
                                 </a>
                             </li>
@@ -41,7 +42,7 @@
                     </ul>
 
                     <!--  -->
-                    <h4 class="m-text14 p-b-32">
+                    @*<h4 class="m-text14 p-b-32">
                         Фильтры
                     </h4>
 
@@ -56,17 +57,13 @@
 
                         <div class="flex-sb-m flex-w p-t-16">
                             <div class="w-size11">
-                                <!-- Button -->
                                 <button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
                                     Фильтр
                                 </button>
                             </div>
 
-                            @*<div class="s-text3 p-t-10 p-b-10">
-                                    Range: $<span id="value-lower">610</span> - $<span id="value-upper">980</span>
-                                </div>*@
                         </div>
-                    </div>
+                    </div>*@
 
                     @*<div class="filter-color p-t-22 p-b-50 bo3">
                             <div class="m-text15 p-b-12">
@@ -159,7 +156,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
                         <!-- Block2 -->
                         <div class="block2">
-                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative @(product.IsNew ? "block2-labelnew" : string.Empty)">
                                 <img src="@product.PreviewImagePath" alt="IMG-PRODUCT">
 
                                 <div class="block2-overlay trans-0-4">

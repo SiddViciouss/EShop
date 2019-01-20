@@ -1,5 +1,5 @@
 ﻿using EShop.Web.Data;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EShop.Web.Models.DbModels
@@ -20,6 +20,14 @@ namespace EShop.Web.Models.DbModels
         public string PreviewImagePath { get; set; }
         public string ImagePaths { get; set; }
 
+        [NotMapped]
+        public bool IsNew
+        {
+            get
+            {
+                return (DateTime.Now - AddedDate).Days < 7;
+            }
+        }
         //public virtual Brand Brand { get; set; }
         //public virtual Unit Unit { get; set; }
         //public virtual ProductManual ProductManual { get; set; }
