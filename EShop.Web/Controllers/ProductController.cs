@@ -18,5 +18,10 @@ namespace EShop.Web.Controllers
             var viewModel = new ProductViewModel(unitOfWork, categoryId);
             return View(viewModel);
         }
+
+        public IActionResult Details(int productId)
+        {
+            return View();
+        }
     }
 }

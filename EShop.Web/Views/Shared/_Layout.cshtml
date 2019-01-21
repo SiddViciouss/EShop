@@ -31,7 +31,7 @@
               crossorigin="anonymous"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE="/>
     </environment>
-    <link rel="stylesheet" href="~/css/site.css" />
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
 </head>
 <body>
     <header class="header1">
@@ -50,7 +50,7 @@
 
             <div class="wrap_header">
                 <!-- Logo -->
-                <a href="index.html" class="logo">
+                <a asp-controller="Product" class="logo">
                     <img src="images/logo.png" alt="IMG-LOGO">
                 </a>
 
@@ -58,16 +58,16 @@
                 <div class="wrap_menu">
                     <nav class="menu">
                         <ul class="main_menu">
-                            <li class="sale-noti">
-                                <a href="product.html">Каталог</a>
+                            <li>
+                                <a asp-controller="Product">Каталог</a>
                             </li>
 
                             <li>
-                                <a href="cart.html">Оплата</a>
+                                <a asp-controller="Order">Оплата</a>
                             </li>
 
                             <li>
-                                <a href="about.html">О компании</a>
+                                <a asp-controller="About">О компании</a>
                             </li>
 
                         </ul>
@@ -93,7 +93,7 @@
         <!-- Header Mobile -->
         <div class="wrap_header_mobile">
             <!-- Logo moblie -->
-            <a href="index.html" class="logo-mobile">
+            <a asp-controller="Product" class="logo-mobile">
                 <img src="images/logo.png" alt="IMG-LOGO">
             </a>
 
@@ -134,15 +134,15 @@
                     </li>
 
                     <li class="item-menu-mobile">
-                        <a href="product.html">Каталог</a>
+                        <a asp-controller="Product">Каталог</a>
                     </li>
 
                     <li class="item-menu-mobile">
-                        <a href="cart.html">Оплата</a>
+                        <a asp-controller="Order">Оплата</a>
                     </li>
 
                     <li class="item-menu-mobile">
-                        <a href="about.html">О компании</a>
+                        <a asp-controller="About">О компании</a>
                     </li>
                 </ul>
             </nav>
@@ -185,8 +185,9 @@
     <script src="~/css/vendor/countdowntime/countdowntime.js" asp-append-version="true"></script>
     <script src="~/css/vendor/lightbox2/js/lightbox.min.js" asp-append-version="true"></script>
     <script src="~/css/vendor/sweetalert/sweetalert.min.js" asp-append-version="true"></script>
-    <script src="~/js/slick-custom.js" asp-append-version="true"></script>
-    <script src="~/js/map-custom.js" asp-append-version="true"></script>
+    @*<script src="~/js/slick-custom.js" asp-append-version="true"></script>*@
+    <script src="~/css/vendor/animsition/js/animsition.min.js" asp-append-version="true"></script>
+    @*<script src="~/js/map-custom.js" asp-append-version="true"></script>*@
     <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
