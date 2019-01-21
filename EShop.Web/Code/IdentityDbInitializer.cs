@@ -36,6 +36,7 @@ namespace EShop.Web.Code
                     Email = "user1@localhost.com",
                     Name = "Basic User",
                     DateOfBirth = new DateTime(1960, 1, 1),
+                    Gender = -1
                 };
 
                 IdentityResult result = userManager.CreateAsync
@@ -58,6 +59,7 @@ namespace EShop.Web.Code
                     Email = "admin@localhost.com",
                     Name = "Mr Admin",
                     DateOfBirth = new DateTime(1985, 1, 1),
+                    Gender = 0
                     //CityId = cityId
                 };
 

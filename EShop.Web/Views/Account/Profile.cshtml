@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Profile";
+}
+@model ApplicationUser
+@{
+    var userGender = "Не выбран";
+    switch(Model.Gender)
+    {
+        case 0:
+            userGender = "Мужской";
+            break;
+        case 1:
+            userGender = "Женский";
+            break;
+    }
+}
+<div style="margin-top: 20px;">
+    <h2>Профиль</h2>
+    <table class="table table-hover">
+        @*<thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>*@
+        <tbody>
+            <tr>
+                <td>Имя пользователя:</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td>Пол:</td>
+                <td>@userGender</td>
+            </tr>
+        </tbody>
+    </table>
+    <a asp-action="LogOut" class="btn btn-primary">Выход</a>
+</div>
