@@ -165,7 +165,7 @@
                             </div>
 
                             <div class="block2-txt p-t-20">
-                                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+                                <a asp-action="Details" asp-route-productId="@product.Id.ToString()" class="block2-name dis-block s-text3 p-b-5">
                                     @product.Name
                                 </a>
                                 <span class="block2-price m-text6 p-r-5">
