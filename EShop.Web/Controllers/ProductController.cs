@@ -1,5 +1,6 @@
 ﻿using EShop.Web.Code;
 using EShop.Web.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.Web.Controllers
@@ -16,6 +17,7 @@ namespace EShop.Web.Controllers
         public IActionResult Index(int? categoryId = null)
         {
             var viewModel = new ProductViewModel(unitOfWork, categoryId);
+            //HttpContext.Session.SetString("_test", "test_test");
             return View(viewModel);
         }
 

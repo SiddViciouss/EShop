@@ -27,11 +27,19 @@ namespace EShop.Web
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+                
 
+            });
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromDays(10);
+                opt.Cookie.HttpOnly = true;
+                opt.Cookie.IsEssential = true;
+            });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -52,13 +60,13 @@ namespace EShop.Web
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(x=>x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = ".EShop.Session";
-                // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromDays(20);
-                options.Cookie.HttpOnly = true;
-            });
+            //services.AddSession(options =>
+            //{
+            //    options.Cookie.Name = ".EShop.Session";
+            //    // Set a short timeout for easy testing.
+            //    options.IdleTimeout = TimeSpan.FromDays(20);
+            //    options.Cookie.HttpOnly = true;
+            //});
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         }
 
