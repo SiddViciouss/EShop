@@ -8,12 +8,11 @@ namespace EShop.Web.Models.DbModels
         public string Name { get; set; }
         public string Description { get; set; }
 
-
         //public int? CategoryId { get; set; }
 
         //[ForeignKey("CategoryId")]
         //public Category Categories { get; set; }
         //public ICollection<Category> CategoriesList { get; set; }
-        public ICollection<Product> Products { get; set; }
+        //public ICollection<Product> Products { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager
 @{
     ViewData["Title"] = "Profile";
 }
 @model ApplicationUser
 @{
     var userGender = "Не выбран";
-    switch(Model.Gender)
+    switch (Model.Gender)
     {
         case 0:
             userGender = "Мужской";
@@ -14,6 +14,7 @@
             userGender = "Женский";
             break;
     }
+    var isAdmin = await userManager.IsInRoleAsync(Model, "Admin");
 }
 <div style="margin-top: 20px;">
     <h2>Профиль</h2>
@@ -39,5 +40,9 @@
             </tr>
         </tbody>
     </table>
+    @if (isAdmin)
+    {
+        <a asp-controller="Admin" asp-action="ProductsManage" class="btn btn-primary">Администрирование</a>
+    }
     <a asp-action="LogOut" class="btn btn-primary">Выход</a>
 </div>

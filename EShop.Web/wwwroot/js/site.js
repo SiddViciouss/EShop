@@ -20,4 +20,6 @@
         }
     });
 
+    //$("body > .container").css("min-height", $("body").height() - $("header").outerHeight() - $("footer").outerHeight() - 23 + "px");
+
 })(jQuery);
