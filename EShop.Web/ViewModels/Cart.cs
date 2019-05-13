@@ -15,7 +15,7 @@ namespace EShop.Web.ViewModels
             this.session = session;
         }
 
-        public void AddItem(int productId, int count)
+        public ICollection<CartItem> GetCartItems()
         {
             ICollection<CartItem> cartItems = null;
             var itemsText = session.GetString(sessionId);
@@ -27,14 +27,29 @@ namespace EShop.Web.ViewModels
             {
                 cartItems = JsonConvert.DeserializeObject<ICollection<CartItem>>(itemsText);
             }
-            var existingItem = cartItems.FirstOrDefault(x => x.ProductId == productId);
+            return cartItems;
+        }
+
+        public void AddItem(CartItem item)
+        {
+            ICollection<CartItem> cartItems = GetCartItems();
+            //var itemsText = session.GetString(sessionId);
+            //if (string.IsNullOrEmpty(itemsText))
+            //{
+            //    cartItems = new List<CartItem>();
+            //}
+            //else
+            //{
+            //    cartItems = JsonConvert.DeserializeObject<ICollection<CartItem>>(itemsText);
+            //}
+            var existingItem = cartItems.FirstOrDefault(x => x.ProductId == item.ProductId);
             if (existingItem == null)
             {
-                cartItems.Add(new CartItem() { ProductId = productId, Count = count });
+                cartItems.Add(new CartItem() { ProductId = item.ProductId, Count = item.Count });
             }
             else
             {
-                existingItem.Count += count;
+                existingItem.Count += item.Count;
             }
             session.SetString(sessionId, JsonConvert.SerializeObject(cartItems));
         }

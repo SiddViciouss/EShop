@@ -16,10 +16,10 @@ namespace EShop.Web.Controllers
         //}
 
         [HttpPost]
-        public async Task<ActionResult> AddItem(int productId, int count)
+        public ActionResult AddItem(int ProductId, int Count)
         {
             var cart = new Cart(HttpContext.Session);
-            cart.AddItem(productId, count);
+            cart.AddItem(new CartItem() { ProductId = ProductId, Count = Count});
             return Ok();
         }
     }

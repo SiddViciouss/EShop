@@ -1,8 +1,20 @@
-﻿
+﻿@model EShop.Web.ViewModels.OrderViewModel
 @{
     ViewData["Title"] = "Оплата";
 }
 
 <div style="margin-top: 20px;">
-    <h3>Раздел находится в разработке</h3>
+    @*<h3>Раздел находится в разработке</h3>*@
+    <table>
+        <tbody>
+            @foreach (var orderItem in Model.Items)
+            {
+                <tr>
+                    <td>@orderItem.ProductName</td>
+                    <td>@orderItem.Description</td>
+                    <td>@orderItem.Count.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
