@@ -1,32 +1,40 @@
 ﻿@model EShop.Web.ViewModels.OrderViewModel
 @{
     ViewData["Title"] = "Оплата";
-    var aa = ViewData["asd"];
 }
 
 <div style="margin-top: 20px;">
     @*<h3>Раздел находится в разработке</h3>*@
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Номер</th>
-                <th>Наименование</th>
-                <th>Описание</th>
-                <th>Количество</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{var i = 1; }
-            @foreach (var orderItem in Model.Items)
-            {
+    @if (Model.Items.Count > 0)
+    {
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td style="text-align: right;">@i.ToString()</td>
-                    <td>@orderItem.ProductName</td>
-                    <td>@orderItem.Description</td>
-                    <td style="text-align: right;">@orderItem.Count.ToString()</td>
+                    <th>Номер</th>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Количество</th>
                 </tr>
-                i++;
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @{var i = 1; }
+                @foreach (var orderItem in Model.Items)
+                {
+                    <tr>
+                        <td style="text-align: right;">@i.ToString()</td>
+                        <td>@orderItem.ProductName</td>
+                        <td>@orderItem.Description</td>
+                        <td style="text-align: right;">@orderItem.Count.ToString()</td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+        <a asp-action="ClearCart" class="btn btn-primary">Очистить</a>
+        <a asp-action="Shipping" class="btn btn-primary">Продолжить</a>
+    }
+    else
+    {
+        <h3>В корзине ничего нет</h3>
+    }
 </div>

@@ -1,0 +1,80 @@
+﻿@model ShippingModel
+@{
+    ViewData["Title"] = "Доставка";
+}
+<div style="margin-top: 20px;">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="CompleteOrder">
+        <fieldset>
+            <legend>Информация о пользователе</legend>
+            <div class="form-group">
+                <label asp-for="CustomerName" class="col-md-2 control-label"></label>
+                <div class="col-md-6">
+                    <input asp-for="CustomerName" class="form-control" />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="col-md-2 control-label"></label>
+                <div class="col-md-4">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="col-md-2 control-label"></label>
+                <div class="col-md-4">
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div style="padding: 0px 0px 20px 20px;">
+                * При регистрации на ваш счёт будет зачислено 5000₽
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Адрес доставки</legend>
+            <div class="form-group">
+                <label asp-for="City" class="col-md-2 control-label"></label>
+                <div class="col-md-4">
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Street" class="form-control" />
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-5 d-inline-block">
+                    <label asp-for="Building" class="control-label"></label>
+                    <input asp-for="Building" class="form-control" />
+                    <span asp-validation-for="Building" class="text-danger"></span>
+                </div>
+                <div class="col-md-5 d-inline-block">
+                    <label asp-for="FlatNumber" class="control-label"></label>
+                    <input asp-for="FlatNumber" class="form-control" />
+                    <span asp-validation-for="FlatNumber" class="text-danger"></span>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Прочее</legend>
+            <div class="form-group">
+                <label asp-for="Comment" class="col-md-4 control-label"></label>
+                <div class="col-md-5">
+                    <textarea rows="4" asp-for="Comment" class="form-control"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <input type="submit" value="Оплатить заказ" class="btn btn-primary" />
+            <input type="submit" asp-action="ClearCart" asp-controller="Order" value="Отменить" class="btn btn-primary">
+        </div>
+    </form>
+    
+</div>
