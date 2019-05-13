@@ -10,15 +10,16 @@ namespace EShop.Web.Controllers
 {
     public class CartController : Controller
     {
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        private ICart cart;
+
+        public CartController(ICart cart)
+        {
+            this.cart = cart;
+        }
 
         [HttpPost]
         public ActionResult AddItem(int ProductId, int Count)
         {
-            var cart = new Cart(HttpContext.Session);
             cart.AddItem(new CartItem() { ProductId = ProductId, Count = Count});
             return Ok();
         }

@@ -1,6 +1,7 @@
 ﻿using EShop.Web.Code;
 using EShop.Web.Data;
 using EShop.Web.Models;
+using EShop.Web.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace EShop.Web
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-                
+
 
             });
             services.AddDistributedMemoryCache();
@@ -59,7 +60,7 @@ namespace EShop.Web
             //    .AddDefaultUI(UIFramework.Bootstrap4)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(x=>x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //services.AddSession(options =>
             //{
             //    options.Cookie.Name = ".EShop.Session";
@@ -68,6 +69,9 @@ namespace EShop.Web
             //    options.Cookie.HttpOnly = true;
             //});
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICart, Cart>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

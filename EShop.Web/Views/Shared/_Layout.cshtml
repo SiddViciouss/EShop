@@ -1,4 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager
+@inject EShop.Web.ViewModels.ICart cart
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,10 +94,9 @@
                     }
 
                     <span class="linedivide1"></span>
-
                     <div class="header-wrapicon2">
                         <img src="~/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                        <span class="header-icons-noti">0</span>
+                        <span class="header-icons-noti">@cart.GetCartItemsCount()</span>
                     </div>
                 </div>
             </div>

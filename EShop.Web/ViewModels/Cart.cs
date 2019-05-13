@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace EShop.Web.ViewModels
 {
-    public class Cart
+    public class Cart : ICart
     {
         protected readonly string sessionId = "_cart";
         protected ISession session;
 
-        public Cart(ISession session)
+        public Cart(IHttpContextAccessor httpContextAccessor)
         {
-            this.session = session;
+            this.session = httpContextAccessor.HttpContext.Session;
         }
 
         public ICollection<CartItem> GetCartItems()
@@ -33,15 +33,6 @@ namespace EShop.Web.ViewModels
         public void AddItem(CartItem item)
         {
             ICollection<CartItem> cartItems = GetCartItems();
-            //var itemsText = session.GetString(sessionId);
-            //if (string.IsNullOrEmpty(itemsText))
-            //{
-            //    cartItems = new List<CartItem>();
-            //}
-            //else
-            //{
-            //    cartItems = JsonConvert.DeserializeObject<ICollection<CartItem>>(itemsText);
-            //}
             var existingItem = cartItems.FirstOrDefault(x => x.ProductId == item.ProductId);
             if (existingItem == null)
             {
@@ -57,6 +48,11 @@ namespace EShop.Web.ViewModels
         public void Clear()
         {
             session.SetString(sessionId, string.Empty);
+        }
+
+        public int GetCartItemsCount()
+        {
+            return GetCartItems().Count;
         }
     }
 

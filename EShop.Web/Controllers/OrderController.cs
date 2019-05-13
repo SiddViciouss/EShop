@@ -8,19 +8,19 @@ namespace EShop.Web.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly ICart cart;
 
-        public OrderController(IUnitOfWork unitOfWork)
+        public OrderController(IUnitOfWork unitOfWork, ICart cart)
         {
             this.unitOfWork = unitOfWork;
+            this.cart = cart;
         }
 
         public IActionResult Index()
         {
             //var test = HttpContext.Session.GetString("_test");
-            var viewModel = new OrderViewModel(unitOfWork, HttpContext.Session);
+            var viewModel = new OrderViewModel(unitOfWork, cart);
             return View(viewModel);
         }
-
-
     }
 }

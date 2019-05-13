@@ -14,10 +14,9 @@ namespace EShop.Web.ViewModels
         protected readonly Cart cart;
         protected readonly ICollection<CartItem> cartItems;
 
-        public OrderViewModel(IUnitOfWork unitOfWork, ISession session)
+        public OrderViewModel(IUnitOfWork unitOfWork, ICart cart)
         {
             this.unitOfWork = unitOfWork;
-            cart = new Cart(session);
             cartItems = cart.GetCartItems();
             var products = unitOfWork.Repository<Product>().Query().AsNoTracking().Where(p => cartItems.Any(c => c.ProductId == p.Id)).ToList();
             Items = new List<OrderItem>();
