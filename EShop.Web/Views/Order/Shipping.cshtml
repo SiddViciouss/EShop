@@ -3,7 +3,6 @@
     ViewData["Title"] = "Доставка";
 }
 <div style="margin-top: 20px;">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <form asp-action="CompleteOrder">
         <fieldset>
             <legend>Информация о пользователе</legend>
@@ -28,9 +27,12 @@
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
             </div>
-            <div style="padding: 0px 0px 20px 20px;">
-                * При регистрации на ваш счёт будет зачислено 5000₽
-            </div>
+            @if (string.IsNullOrEmpty(Model.UserId))
+            {
+                <div style="padding: 0px 0px 20px 20px;">
+                    * При регистрации на ваш счёт будет зачислено 5000₽
+                </div>
+            }
         </fieldset>
         <fieldset>
             <legend>Адрес доставки</legend>
@@ -70,11 +72,29 @@
                     <span asp-validation-for="Comment" class="text-danger"></span>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-3 d-inline-block"><label asp-for="PriceTotal"></label></div>
+                @*<div class="col-md-3 d-inline-block">@(Model.PriceTotal.ToString("C"))</div>*@
+                <div class="col-md-2 d-inline-block" style="padding-right: 0px;">
+                    <input asp-for="PriceTotal" class="form-control" readonly="readonly" />
+                </div>
+                <div class="d-inline-block">₽</div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 d-inline-block"><label asp-for="AvailableMoney"></label></div>
+                @*<div class="col-md-3 d-inline-block">@(Model.AvailableMoney.ToString("C"))</div>*@
+                <div class="col-md-2 d-inline-block" style="padding-right: 0px;">
+                    <input asp-for="AvailableMoney" class="form-control" readonly="readonly" />
+                </div>
+                <div class="d-inline-block">₽</div>
+            </div>
         </fieldset>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <input type="submit" value="Оплатить заказ" class="btn btn-primary" />
             <input type="submit" asp-action="ClearCart" asp-controller="Order" value="Отменить" class="btn btn-primary">
         </div>
+
     </form>
-    
+
 </div>
