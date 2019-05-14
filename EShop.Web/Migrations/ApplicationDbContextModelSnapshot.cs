@@ -3,16 +3,14 @@ using System;
 using EShop.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EShop.Web.Data.Migrations
+namespace EShop.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190114205003_BasicEntities")]
-    partial class BasicEntities
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +52,11 @@ namespace EShop.Web.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Address");
+                    b.Property<decimal>("AvailableMoney");
+
+                    b.Property<string>("Building");
+
+                    b.Property<string>("City");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -67,6 +69,8 @@ namespace EShop.Web.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<int>("FlatNumber");
 
                     b.Property<int>("Gender");
 
@@ -91,6 +95,8 @@ namespace EShop.Web.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Street");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -136,22 +142,13 @@ namespace EShop.Web.Data.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<int>("ProductId");
+                    b.Property<int>("OrderStatus");
 
-                    b.Property<int>("Quantity");
-
-                    b.Property<int>("Status");
-
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1")
-                        .IsRequired();
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -169,9 +166,13 @@ namespace EShop.Web.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("ImagePaths");
+
                     b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("PreviewImagePath");
 
                     b.Property<decimal>("Price");
 
@@ -182,6 +183,21 @@ namespace EShop.Web.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("EShop.Web.Models.DbModels.ProductList", b =>
+                {
+                    b.Property<int>("OrderId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<int>("Count");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -224,11 +240,9 @@ namespace EShop.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -259,11 +273,9 @@ namespace EShop.Web.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -274,22 +286,29 @@ namespace EShop.Web.Data.Migrations
 
             modelBuilder.Entity("EShop.Web.Models.DbModels.Order", b =>
                 {
-                    b.HasOne("EShop.Web.Models.DbModels.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("EShop.Web.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EShop.Web.Models.DbModels.Product", b =>
                 {
                     b.HasOne("EShop.Web.Models.DbModels.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EShop.Web.Models.DbModels.ProductList", b =>
+                {
+                    b.HasOne("EShop.Web.Models.DbModels.Order", "Order")
+                        .WithMany("ProductList")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EShop.Web.Models.DbModels.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

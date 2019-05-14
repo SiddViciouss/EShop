@@ -134,7 +134,7 @@ namespace EShop.Web.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(ProductController.Index), "Home");
+                return RedirectToAction(nameof(ProductController.Index), "Product");
             }
         }
     }

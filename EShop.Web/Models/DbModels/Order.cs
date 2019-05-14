@@ -1,23 +1,24 @@
 ﻿using EShop.Web.Data;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EShop.Web.Models.DbModels
 {
     public class Order : BaseEntity
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; }
-
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
-        public int Quantity { get; set; }
-        public int Status { get; set; }
+        public virtual ICollection<ProductList> ProductList { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 
     public enum OrderStatus
     {
         Created = 0,
-        Confirmed = 1,
-        PaidFor = 2,
+        PaidFor = 1,
+        Shipped = 2,
         Deleted = 3
+        //Confirmed = 4,
     }
 }

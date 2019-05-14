@@ -11,7 +11,8 @@ namespace EShop.Web.Code
     {
         public static void Initialize(ApplicationDbContext context)
         {
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
+            context.Database.Migrate();
             if (!context.Categories.Any())
             {
                 CreateCategories(context);

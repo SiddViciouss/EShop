@@ -14,7 +14,12 @@ namespace EShop.Web.Models
         public int Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string JoinIp { get; set; }
-        public string Address { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string Building { get; set; }
+        public int FlatNumber { get; set; }
+        public decimal AvailableMoney { get; set; }
+
         //public int? CityId { get; set; }
         //public string Refference { get; set; }
 

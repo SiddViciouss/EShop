@@ -1,12 +1,15 @@
 ﻿using EShop.Web.Code;
 using EShop.Web.Models;
 using EShop.Web.Models.DbModels;
+using EShop.Web.Services;
 using EShop.Web.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EShop.Web.Controllers
 {
@@ -46,6 +49,11 @@ namespace EShop.Web.Controllers
                 model.PhoneNumber = user.PhoneNumber;
                 model.Email = user.Email;
                 model.UserId = user.Id;
+                model.City = user.City;
+                model.Street = user.Street;
+                model.Building = user.Building;
+                model.FlatNumber = user.FlatNumber;
+                model.AvailableMoney = user.AvailableMoney;
             }
             else
             {
@@ -60,21 +68,101 @@ namespace EShop.Web.Controllers
                 sum += cartItem.Count * product.Price;
             }
             model.PriceTotal = sum;
-
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Shipping(ShippingModel model)
+        public async Task<IActionResult> Shipping(ShippingModel model)
         {
             TryValidateModel(model);
             if (ModelState.IsValid)
             {
-                cart.Clear();
+                // register user if necessary
+                if (string.IsNullOrEmpty(model.UserId))
+                {
+                    var newUser = new ApplicationUser()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = model.CustomerName,
+                        PhoneNumber = model.PhoneNumber,
+                        PhoneNumberConfirmed = true, // mock
+                        Email = model.Email,
+                        UserName = model.Email,
+                        City = model.City,
+                        Street = model.Street,
+                        Building = model.Building,
+                        FlatNumber = model.FlatNumber,
+                        AvailableMoney = 5000,
+                        EmailConfirmed = true // mock
+                    };
+                    var pwd = Utility.GenerateRandomPassword();
+                    var createUserResult = await userManager.CreateAsync(newUser, pwd);
+                    if (createUserResult.Succeeded)
+                    {
+                        createUserResult = await userManager.AddToRoleAsync(newUser, "User");
+                    }
+                    if (!createUserResult.Succeeded)
+                    {
+                        throw new Exception($"Unexpected error occured on user register: {createUserResult.Errors.FirstOrDefault()?.Description}");
+                    }
+                    var emailService = new EmailService();
+                    // sending email with registration information
+                    await emailService.SendEmailAsync(newUser.Email, "Регистрация на сайте 42studio.org", $"Регистрация на сайте 42studio.org прошла успешно. Ваш логин: {newUser.UserName} , пароль: {pwd}");
+                    model.UserId = newUser.Id;
+                }
+                // creating order
+                Order orderDb = null;
+                try
+                {
+                    var orderRecord = new Order()
+                    {
+                        UserId = model.UserId,
+                        AddedDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
+                        OrderStatus = OrderStatus.Created
+                    };
+                    orderDb = await unitOfWork.Repository<Order>().InsertAsync(orderRecord);
+                }
+                catch (Exception ex)
+                {
+                    //ToDo: log exception
+                    throw new DbUpdateException("Unexpected error occured on order create, see InnerException for details", ex);
+                }
+                var cartItems = cart.GetCartItems();
+                try
+                {
+                    foreach (var item in cartItems)
+                    {
+                        var listRecord = new ProductList()
+                        {
+                            OrderId = orderDb.Id,
+                            ProductId = item.ProductId,
+                            Count = item.Count
+                        };
+                        await unitOfWork.Repository<ProductList>().InsertAsync(listRecord);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //ToDo: log exception
+                    throw new DbUpdateException("Unexpected error occured on product list create, see InnerException for details", ex);
+                }
+                // substracting user money
+                var user = await userManager.FindByIdAsync(model.UserId);
+                user.AvailableMoney -= model.PriceTotal;
+                var substractResult = await userManager.UpdateAsync(user);
+                if (substractResult.Succeeded)
+                {
+                    orderDb.OrderStatus = OrderStatus.PaidFor;
+                    await unitOfWork.Repository<Order>().UpdateAsync(orderDb);
+                    cart.Clear();
+                }
                 return RedirectToAction(actionName: nameof(Index));
             }
             return View(model);
         }
+
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EShop.Web.Data;
 using EShop.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +29,21 @@ namespace EShop.Web.Code
         {
             //int cityId = _context.Cities.First(x => x.Name == "Dhaka").Id;
             if (userManager.FindByNameAsync
-                    ("user1").Result == null)
+                    ("user1@localhost.com").Result == null)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "user1",
+                    UserName = "user1@localhost.com",
                     Email = "user1@localhost.com",
-                    Name = "Basic User",
+                    Name = "Простой пользователь",
                     DateOfBirth = new DateTime(1960, 1, 1),
-                    Gender = -1
+                    PhoneNumber = "+7(3422)44-55-77",
+                    Gender = -1,
+                    City = "Пермь",
+                    Street = "ул. Ленина", 
+                    Building  = "10",
+                    FlatNumber = 123,
+                    AvailableMoney = 5000
                 };
 
                 IdentityResult result = userManager.CreateAsync
@@ -51,15 +58,21 @@ namespace EShop.Web.Code
 
 
             if (userManager.FindByNameAsync
-                    ("admin").Result == null)
+                    ("admin@localhost.com").Result == null)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = "admin",
+                    UserName = "admin@localhost.com",
                     Email = "admin@localhost.com",
                     Name = "Mr Admin",
                     DateOfBirth = new DateTime(1985, 1, 1),
-                    Gender = 0
+                    Gender = 0,
+                    PhoneNumber = "+7-900-333-44-44",
+                    City = "Пермь",
+                    Street = "ул. Ленина",
+                    Building = "10",
+                    FlatNumber = 123,
+                    AvailableMoney = 500000
                     //CityId = cityId
                 };
 
