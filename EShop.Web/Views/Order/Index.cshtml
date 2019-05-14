@@ -14,6 +14,7 @@
                     <th>Наименование</th>
                     <th>Описание</th>
                     <th>Количество</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <td>@orderItem.ProductName</td>
                         <td>@orderItem.Description</td>
                         <td style="text-align: right;">@orderItem.Count.ToString()</td>
+                        <td><a asp-action="RemoveFromCart" asp-all-route-data="@(new Dictionary<string, string>() { {"productId", orderItem.Id.ToString() }})" class="btn btn-primary">Удалить</a></td>
                     </tr>
                     i++;
                 }

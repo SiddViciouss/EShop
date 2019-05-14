@@ -8,5 +8,6 @@ namespace EShop.Web.ViewModels
         void Clear();
         ICollection<CartItem> GetCartItems();
         int GetCartItemsCount();
+        void RemoveItem(int productId);
     }
 }

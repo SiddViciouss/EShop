@@ -36,7 +36,14 @@ namespace EShop.Web.Controllers
         public IActionResult ClearCart()
         {
             cart.Clear();
-            return Redirect(Url.Action("Index", "Order"));
+            //return Redirect(Url.Action("Index", "Order"));
+            return RedirectToAction(actionName: nameof(Index));
+        }
+
+        public IActionResult RemoveFromCart(int productId)
+        {
+            cart.RemoveItem(productId);
+            return RedirectToAction(actionName: nameof(Index));
         }
 
         public IActionResult Shipping()
@@ -158,11 +165,11 @@ namespace EShop.Web.Controllers
                     await unitOfWork.Repository<Order>().UpdateAsync(orderDb);
                     cart.Clear();
                 }
-                return RedirectToAction(actionName: nameof(Index));
+                return RedirectToAction(actionName: nameof(Completed));
             }
             return View(model);
         }
 
-        
+        public IActionResult Completed() => View();
     }
 }

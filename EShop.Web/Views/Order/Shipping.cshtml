@@ -4,6 +4,7 @@
 }
 <div style="margin-top: 20px;">
     <form asp-action="CompleteOrder">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <fieldset>
             <legend>Информация о пользователе</legend>
             <div class="form-group">
@@ -89,12 +90,13 @@
                 <div class="d-inline-block">₽</div>
             </div>
         </fieldset>
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <input type="submit" value="Оплатить заказ" class="btn btn-primary" />
             <input type="submit" asp-action="ClearCart" asp-controller="Order" value="Отменить" class="btn btn-primary">
         </div>
-
+        <div style="display: none;">
+            <input asp-for="UserId" class="form-control" readonly="readonly" />
+        </div>
     </form>
 
 </div>

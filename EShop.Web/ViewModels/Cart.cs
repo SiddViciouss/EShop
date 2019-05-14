@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,7 @@ namespace EShop.Web.ViewModels
 
         public Cart(IHttpContextAccessor httpContextAccessor)
         {
-            this.session = httpContextAccessor.HttpContext.Session;
+            session = httpContextAccessor.HttpContext.Session;
         }
 
         public ICollection<CartItem> GetCartItems()
@@ -32,7 +33,7 @@ namespace EShop.Web.ViewModels
 
         public void AddItem(CartItem item)
         {
-            ICollection<CartItem> cartItems = GetCartItems();
+            var cartItems = GetCartItems();
             var existingItem = cartItems.FirstOrDefault(x => x.ProductId == item.ProductId);
             if (existingItem == null)
             {
@@ -42,6 +43,18 @@ namespace EShop.Web.ViewModels
             {
                 existingItem.Count += item.Count;
             }
+            session.SetString(sessionId, JsonConvert.SerializeObject(cartItems));
+        }
+
+        public void RemoveItem(int productId)
+        {
+            var cartItems = GetCartItems();
+            var item = cartItems.FirstOrDefault(x => x.ProductId == productId);
+            if (item == null)
+            {
+                throw new ArgumentException("Cart item for delete not found.");
+            }
+            cartItems.Remove(item);
             session.SetString(sessionId, JsonConvert.SerializeObject(cartItems));
         }
 
