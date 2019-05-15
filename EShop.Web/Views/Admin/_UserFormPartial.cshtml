@@ -1,0 +1,58 @@
+﻿@model EShop.Web.Models.UserDTO
+<form asp-action="UserSave" id="userSaveForm">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Name" class="col-md-12 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    @*<div class="form-group">
+            <label asp-for="Email" class="col-md-2 control-label"></label>
+            <div class="col-md-4">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>*@
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="col-md-6 control-label"></label>
+        <div class="col-md-7">
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="City" class="col-md-6 control-label"></label>
+        <div class="col-md-7">
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Street" class="col-md-6 control-label"></label>
+        <div class="col-md-12">
+            <input asp-for="Street" class="form-control" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-5 d-inline-block">
+            <label asp-for="Building" class="control-label"></label>
+            <input asp-for="Building" class="form-control" />
+            <span asp-validation-for="Building" class="text-danger"></span>
+        </div>
+        <div class="col-md-5 d-inline-block">
+            <label asp-for="FlatNumber" class="control-label"></label>
+            <input asp-for="FlatNumber" class="form-control" />
+            <span asp-validation-for="FlatNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="AvailableMoney" class="col-md-2 control-label"></label>
+        <div class="col-md-4">
+            <input asp-for="AvailableMoney" class="form-control" />
+            <span asp-validation-for="AvailableMoney" class="text-danger"></span>
+        </div>
+    </div>
+</form>

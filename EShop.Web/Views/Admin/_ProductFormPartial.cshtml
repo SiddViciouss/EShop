@@ -1,0 +1,21 @@
+﻿@model EShop.Web.Models.ProductDTO
+<form asp-action="ProductSave">
+    <div class="form-group">
+        <label asp-for="Code" class="col-md-2 control-label" style="margin-top: 10px;"></label>
+        <div class="col-md-6">
+            <input asp-for="Code" class="form-control" />
+        </div>
+        <label asp-for="Name" class="col-md-2 control-label" style="margin-top: 10px;"></label>
+        <div class="col-md-6">
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <label asp-for="Description" class="col-md-2 control-label" style="margin-top: 10px;"></label>
+        <div class="col-md-6">
+            <input asp-for="Description" class="form-control" />
+        </div>
+        <label asp-for="Price" class="col-md-4 control-label" style="margin-top: 10px;"></label>
+        <div class="col-md-6">
+            <input asp-for="Price" class="form-control" />
+        </div>
+    </div>
+</form>

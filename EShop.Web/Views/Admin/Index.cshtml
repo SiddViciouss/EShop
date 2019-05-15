@@ -2,63 +2,144 @@
 @{
     ViewData["Title"] = "Index";
 }
-@model ICollection<EShop.Web.Models.DbModels.Product>
-<div style="margin-top: 20px;">
-    <div class="p-b-20">
-        <button type="button" class="btn btn-primary">Добавить</button>
+@model EShop.Web.ViewModels.AdminViewModel
+<div id="containerBody" style="margin-top: 20px;">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" v-bind:class="{'active': activeTab===0}" href="#users" v-on:click="toggleTab(0)">Пользователи</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" v-bind:class="{'active': activeTab===1}" href="#products" v-on:click="toggleTab(1)">Каталог продуктов</a>
+        </li>
+    </ul>
+    <div v-show="activeTab===1" style="padding-top: 20px;">
+        @*<div class="p-b-20">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProductDlg">Добавить</button>
+        </div>*@
+        <table class="table table-hover" id="tableProducts">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Наименование</th>
+                    <th>Код</th>
+                    <th>Описание</th>
+                    <th>Цена</th>
+                    <th>Категория</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(product, index) in products">
+                    <td>{{ index+1 }}</td>
+                    <td>{{ product.Name }}</td>
+                    <td>{{ product.Code }}</td>
+                    <td>{{ product.Description }}</td>
+                    <td>{{ product.Price }}</td>
+                    <td>{{ product.Category.Name }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal" id="editProductDlg">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редактирование</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @**@
+                        <partial name="_ProductFormPartial" model="@(new ProductDTO())"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <table class="table table-hover" id="tableMain">
-        <thead>
-            <tr>
-                <th>Номер</th>
-                <th>Наименование</th>
-                <th>Код</th>
-                <th>Описание</th>
-                <th>Цена</th>
-                <th>Категория</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(product, index) in products">
-                <td>{{ index+1 }}</td>
-                <td>{{ product.Name }}</td>
-                <td>{{ product.Code }}</td>
-                <td>{{ product.Description }}</td>
-                <td>{{ product.Price }}</td>
-                <td>{{ product.Category.Name }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="modal" id="editDlg">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Редактирование</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @*<form>
-
-                </form>*@
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Сохранить</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+    <div v-show="activeTab===0" style="padding-top: 20px;">
+        <div class="p-b-20">
+            @*data-toggle="modal" data-target=*@
+            <button type="button" class="btn btn-primary" v-on:click="showEditUserDlg()">Добавить</button>
+        </div>
+        <table class="table table-hover" id="tableUsers">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Имя</th>
+                    <th>Логин</th>
+                    @*<th>Описание</th>
+                    <th>Цена</th>
+                    <th>Категория</th>*@
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user, index) in users">
+                    <td>{{ index+1 }}</td>
+                    <td>{{ user.Name }}</td>
+                    <td>{{ user.UserName }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" v-on:click="showEditUserDlg(user)">Редактировать</button>
+                        <button type="button" class="btn btn-primary" v-on:click="deleteUser(user)">Удалить</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal" id="editUserDlg">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редактирование</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="editUserDlgBody">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        @*<button type="button" class="btn btn-primary" form="userSaveForm">Сохранить</button>*@
+                        <input type="submit" class="btn btn-primary" form="userSaveForm" value="Сохранить" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 @section Scripts {
     <script type="text/javascript">
-        var model = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model)));
+        var productModel = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ProductList)));
+        var usersModel = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.UserList)));
         var app = new Vue({
-            el: '#tableMain',
+            el: '#containerBody',
             data: {
-                products: model,
-                selectedProduct: null
+                products: productModel,
+                users: usersModel,
+                selectedProduct: null,
+                activeTab: 0,
+                isActive: true
+            },
+            methods: {
+                toggleTab: function (tabNum) {
+                    this.activeTab = tabNum;
+                },
+                showEditUserDlg: function (user) {
+                    var paramStr = "";
+                    if (user) {
+                        paramStr = "?userId=" + user.Id;
+                    }
+                    $("#editUserDlgBody").load("/Admin/UserFormPartial" + paramStr, function () { $("#editUserDlg").modal(); });
+                },
+                deleteUser: function (user) {
+                    if (confirm("Вы уверены, что хотите удалить пользователя '" + user.Name + "'?")) {
+                        window.location.replace("/Admin/UserDelete?userId=" + user.Id);
+                        //Response.redirect("/Admin/UserDelete?userId=" + user.Id);
+                    }
+                }
             }
         });
     </script>

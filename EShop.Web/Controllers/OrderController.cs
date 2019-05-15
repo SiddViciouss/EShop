@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -88,6 +87,12 @@ namespace EShop.Web.Controllers
                 // register user if necessary
                 if (string.IsNullOrEmpty(model.UserId))
                 {
+                    var userCheck = await userManager.FindByNameAsync(model.Email);
+                    if (userCheck != null)
+                    {
+                        ModelState.AddModelError("Email", "Пользователь с таким Email уже зарегистрирован");
+                        return View(model);
+                    }
                     var newUser = new ApplicationUser()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -115,7 +120,14 @@ namespace EShop.Web.Controllers
                     }
                     var emailService = new EmailService();
                     // sending email with registration information
-                    await emailService.SendEmailAsync(newUser.Email, "Регистрация на сайте 42studio.org", $"Регистрация на сайте 42studio.org прошла успешно. Ваш логин: {newUser.UserName} , пароль: {pwd}");
+                    try
+                    {
+                        await emailService.SendEmailAsync(newUser.Email, "Регистрация на сайте 42studio.org", $"Регистрация на сайте 42studio.org прошла успешно. Ваш логин: {newUser.UserName} , пароль: {pwd}");
+                    }
+                    catch(Exception ex)
+                    {
+                        //ToDo: log exception
+                    }
                     model.UserId = newUser.Id;
                 }
                 // creating order

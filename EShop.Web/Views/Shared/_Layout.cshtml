@@ -39,7 +39,7 @@
     <header class="header1">
         <!-- Header desktop -->
         <div class="container-menu-header">
-            <div class="topbar">
+            <div class="topbar" id="topbar">
                 <span class="topbar-child1">
                     <i class="fa-phone" style="font-family: fontawesome;"></i> +7-932-22-33-567
                 </span>
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="wrap_header">
+            <div class="wrap_header" id="wrapheader">
                 <!-- Logo -->
                 <a asp-controller="Product" asp-action="Index" class="logo">
                     <img src="~/images/logo.png" alt="IMG-LOGO">
@@ -91,10 +91,10 @@
                     }
 
                     <span class="linedivide1"></span>
-                    <div class="header-wrapicon2">
+                    <a asp-controller="Order" class="header-wrapicon2" id="wrapicon2">
                         <img src="~/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
                         <span class="header-icons-noti">@cart.GetCartItemsCount()</span>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -197,6 +197,7 @@
     @*<script src="~/js/slick-custom.js" asp-append-version="true"></script>*@
     <script src="~/css/vendor/animsition/js/animsition.min.js" asp-append-version="true"></script>
     <script src="~/lib/vue/vue.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap-notify/bootstrap-notify.min.js" asp-append-version="true"></script>
     @*<script src="~/js/map-custom.js" asp-append-version="true"></script>*@
     <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
