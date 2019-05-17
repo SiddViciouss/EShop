@@ -169,6 +169,12 @@ namespace EShop.Web.Controllers
                 }
                 // substracting user money
                 var user = await userManager.FindByIdAsync(model.UserId);
+                // control check in case of attempt to hack
+                // order will be saved for latest analyse
+                if (user.AvailableMoney < model.PriceTotal)
+                {
+                    return BadRequest();
+                }
                 user.AvailableMoney -= model.PriceTotal;
                 var substractResult = await userManager.UpdateAsync(user);
                 if (substractResult.Succeeded)
