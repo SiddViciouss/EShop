@@ -1,6 +1,7 @@
 ﻿using EShop.Web.Code;
 using EShop.Web.Data;
 using EShop.Web.Models;
+using EShop.Web.Services;
 using EShop.Web.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,6 +74,8 @@ namespace EShop.Web
             //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICart, Cart>();
+            services.AddScoped<IEmailService, YandexMailService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

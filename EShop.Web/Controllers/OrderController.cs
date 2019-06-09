@@ -17,12 +17,14 @@ namespace EShop.Web.Controllers
         private readonly IUnitOfWork unitOfWork;
         private readonly ICart cart;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IEmailService emailService;
 
-        public OrderController(IUnitOfWork unitOfWork, ICart cart, UserManager<ApplicationUser> userManager)
+        public OrderController(IUnitOfWork unitOfWork, ICart cart, UserManager<ApplicationUser> userManager, IEmailService emailService)
         {
             this.unitOfWork = unitOfWork;
             this.cart = cart;
             this.userManager = userManager;
+            this.emailService = emailService;
         }
 
         public IActionResult Index()
@@ -118,7 +120,7 @@ namespace EShop.Web.Controllers
                     {
                         throw new Exception($"Unexpected error occured on user register: {createUserResult.Errors.FirstOrDefault()?.Description}");
                     }
-                    var emailService = new EmailService();
+                    //var emailService = new MailgunEmailService();
                     // sending email with registration information
                     try
                     {
