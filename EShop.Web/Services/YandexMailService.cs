@@ -16,7 +16,7 @@ namespace EShop.Web.Services
                 EnableSsl = true,
                 Port = 587,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("admin@42studio.org", "Iamadmin#")
+                Credentials = new NetworkCredential("admin@42studio.org", "")
             };
 
             MailMessage mailMessage = new MailMessage("admin@42studio.org", email)
@@ -24,7 +24,7 @@ namespace EShop.Web.Services
                 Body = message,
                 Subject = subject
             };
-            client.Send(mailMessage);
+            await client.SendMailAsync(mailMessage);
         }
     }
 }
