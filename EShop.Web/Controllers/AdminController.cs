@@ -5,6 +5,7 @@ using EShop.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -82,7 +83,7 @@ namespace EShop.Web.Controllers
                 {
                     await unitOfWork.Repository<ProductList>().DeleteAsync(list);
                 }
-                foreach(var order in userOrders)
+                foreach (var order in userOrders)
                 {
                     await unitOfWork.Repository<Order>().DeleteAsync(order);
                 }
@@ -119,6 +120,39 @@ namespace EShop.Web.Controllers
             }
 
             return PartialView("_UserFormPartial", model);
+        }
+
+        public IActionResult ProductFormPartial(int? productId)
+        {
+            var model = new ProductDTO();
+            if (productId.HasValue && productId >= 0)
+            {
+                var product = unitOfWork.Repository<Product>().Query().AsNoTracking().FirstOrDefault(x => x.Id == productId); ///.FindAsync(p => p.Id == productId);
+                if (product != null)
+                {
+                    model.Id = productId.Value;
+                    model.Code = product.Code;
+                    model.ImagePaths = product.ImagePaths;
+                    model.PreviewImagePath = product.PreviewImagePath;
+                    model.Name = product.Name;
+                    model.Price = product.Price;
+                    model.Tag = product.Tag;
+                    model.CategoryId = product.CategoryId;
+                    model.Category = product.Category;
+                    model.Description = product.Description;
+                }
+                //model.Id = 1;
+                //model.Code = "K001";
+                //model.ImagePaths = "";
+                //model.PreviewImagePath = "";
+                //model.Name = "Name";
+                //model.Price = 111;
+                //model.Tag = "product.Tag";
+                //model.CategoryId = 1;
+                //model.Category = null;
+                //model.Description = "product.Description";
+            }
+            return PartialView("_ProductFormPartial", model);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace EShop.Web.ViewModels
                                 .GetAllInclude(x => x.Category)
                                 .Select(x => new ProductDTO()
                                 {
+                                    Id = x.Id,
                                     Code = x.Code,
                                     CategoryId = x.CategoryId,
                                     Category = x.Category,

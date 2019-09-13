@@ -32,5 +32,6 @@ namespace EShop.Web.Models
         public string ImagePaths { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public int Id { get; set; }
     }
 }

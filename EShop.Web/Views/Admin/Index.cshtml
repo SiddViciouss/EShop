@@ -25,6 +25,7 @@
                     <th>Описание</th>
                     <th>Цена</th>
                     <th>Категория</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +36,10 @@
                     <td>{{ product.Description }}</td>
                     <td>{{ product.Price }}</td>
                     <td>{{ product.Category.Name }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" v-on:click="showEditProductDlg(product)" style="margin-top: 10px;">Редактировать</button>
+                        <button type="button" class="btn btn-primary" style="margin-top: 10px;">Удалить</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -47,9 +52,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        @**@
-                        <partial name="_ProductFormPartial" model="@(new ProductDTO())"/>
+                    <div class="modal-body" id="editProductDlgBody">
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary">Сохранить</button>
@@ -102,8 +106,8 @@
                     </div>
                     <div class="modal-footer">
                         @*<button type="button" class="btn btn-primary" form="userSaveForm">Сохранить</button>*@
-                        <input type="submit" class="btn btn-primary" form="userSaveForm" value="Сохранить" />
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                        <input type="submit" class="btn btn-primary" form="userSaveForm" value="Сохранить"  />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Отмена</button>
                     </div>
                 </div>
             </div>
@@ -133,6 +137,14 @@
                         paramStr = "?userId=" + user.Id;
                     }
                     $("#editUserDlgBody").load("/Admin/UserFormPartial" + paramStr, function () { $("#editUserDlg").modal(); });
+                },
+                showEditProductDlg: function (product) {
+                    console.log(product);
+                    var paramStr = "";
+                    if (product) {
+                        paramStr = "?productId=" + product.Id;
+                    }
+                    $("#editProductDlgBody").load("/Admin/ProductFormPartial" + paramStr, function () { $("#editProductDlg").modal(); });
                 },
                 deleteUser: function (user) {
                     if (confirm("Вы уверены, что хотите удалить пользователя '" + user.Name + "'?")) {
