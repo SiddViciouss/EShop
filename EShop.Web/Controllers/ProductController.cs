@@ -16,8 +16,9 @@ namespace EShop.Web.Controllers
 
         public IActionResult Index(int? categoryId = null)
         {
+            //comment
             var viewModel = new ProductViewModel(unitOfWork, categoryId);
-            return View(viewModel);
+            return View(viewModel); 
         }
 
         public IActionResult Details(int productId)
